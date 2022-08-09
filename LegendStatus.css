@@ -1,0 +1,13 @@
+.legend_table1 {
+    border-collapse: collapse;
+    width: 45%;
+    margin-left: 10em;
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+
+.legend_th,
+.legend_td {
+    text-align: left;
+    padding-top: 6.5px;
+}
