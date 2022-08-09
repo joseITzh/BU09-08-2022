@@ -11,7 +11,7 @@ import "../styles/Form.css";
 // For Form validation.
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ticketSchema } from "../../Validations/FormValidation";
+import { ticketSchema } from "../../validations/FormValidation";
 
 // For updated_on date.
 import { dt } from "../date/Date";
@@ -21,8 +21,6 @@ const UpdateForm = () => {
 
   // Destructure the variables we get from the ReadContext.
   const { id } = useContext(ReadContext);
-  const { problemType } = useContext(ReadContext);
-  const { setProblemType } = useContext(ReadContext);
   const { problemTitle } = useContext(ReadContext);
   const { setProblemTitle } = useContext(ReadContext);
   const { problemDescription } = useContext(ReadContext);
@@ -58,7 +56,6 @@ const UpdateForm = () => {
     axios
       .put(`${baseURL}/${id}`, {
         // The POST request takes two arguments, the url and the data we need to post.
-        problemType: problemType,
         problemTitle: problemTitle,
         problemDescription: problemDescription,
         stepsToReproduce: stepsToReproduce,
@@ -72,6 +69,7 @@ const UpdateForm = () => {
       .then((response) => {
         // The then method is invoked when a post request is succesful.
         console.log(msgUpdated);
+
         setUpdateButton(true);
       })
       .catch(() => {
@@ -92,17 +90,6 @@ const UpdateForm = () => {
         <form className="form" onSubmit={handleSubmit(updateTicket)}>
           <h1>Edit Ticket</h1>
           <div className="form_divs">
-            <select
-              value={problemType}
-              name="problem-types"
-              onChange={(event) => setProblemType(event.target.value)}
-            >
-              <option value="">Problem Type:</option>
-              <option value="Login Error">Login error</option>
-              <option value="Tag Error">Tag error</option>
-              <option value="Click Error">Can't click on option</option>
-              <option value="Other">Other</option>
-            </select>
             <input type="text" className="input_date" value={dt} readOnly={true} />
           </div>
           <div className="form_divs">
@@ -195,7 +182,8 @@ const UpdateForm = () => {
               <option value="MEDIUM">MEDIUM</option>
               <option value="LOW">LOW</option>
             </select>
-            <input className="addTicketbutton" type="submit"></input>
+            <button className="goBackbutton" onClick={() => navigate("/")}>Go Back</button>
+            <input className="updateTicketbutton" type="submit"></input>
           </div>
         </form>
       </div>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 
 // To deal with HTTP requests.
 import axios from "axios";
@@ -10,14 +10,17 @@ import "../styles/Form.css";
 // For Form validation.
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ticketSchema } from "../../Validations/FormValidation";
+import { ticketSchema } from "../../validations/FormValidation";
 
 // For created_on date.
 import { dt } from "../date/Date";
 
-import "../styles/Form.css";
+
 
 function CreateForm() {
+
+  const navigate = useNavigate();
+
   const baseURL = "https://62e3b84a3c89b95396cec029.mockapi.io/TicketInfo";
 
   const [msgAdded, setMsgAdded] = useState("Ticket successfully added");
@@ -82,20 +85,9 @@ function CreateForm() {
         <form className="form" onSubmit={handleSubmit(addTicket)}>
           <h1>Create Ticket</h1>
           <div className="form_divs">
-            <select
-              value={problemType}
-              name="problem-types"
-              onChange={(event) => setProblemType(event.target.value)}
-              required
-            >
-              <option value="">Problem Type:</option>
-              <option value="Login Error">Login error</option>
-              <option value="Tag Error">Tag error</option>
-              <option value="Click Error">Can't click on option</option>
-              <option value="Other">Other</option>
-            </select>
             <input type="text" className="input_date" value={dt} readOnly={true} />
           </div>
+
           <div className="form_divs">
             <input
               className="input_title"
@@ -184,6 +176,7 @@ function CreateForm() {
               <option value="MEDIUM">MEDIUM</option>
               <option value="LOW">LOW</option>
             </select>
+            <button className="goBackbutton" onClick={() => navigate("/")}>Go Back</button>
             <input className="addTicketbutton" type="submit"></input>
           </div>
         </form>
@@ -192,3 +185,21 @@ function CreateForm() {
   );
 }
 export default CreateForm;
+
+/**
+ *   <div className="form_divs">
+            <select
+              value={problemType}
+              name="problem-types"
+              onChange={(event) => setProblemType(event.target.value)}
+              required
+            >
+              <option value="">Problem Type:</option>
+              <option value="Login Error">Login error</option>
+              <option value="Tag Error">Tag error</option>
+              <option value="Click Error">Can't click on option</option>
+              <option value="Other">Other</option>
+            </select>
+            <input type="text" className="input_date" value={dt} readOnly={true} />
+          </div>
+ */
